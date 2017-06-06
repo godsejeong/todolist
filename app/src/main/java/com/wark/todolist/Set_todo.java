@@ -13,7 +13,7 @@ public class Set_todo extends Activity implements View.OnClickListener {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.);
+        setContentView(R.layout.settodo);
     }
 
     @Override

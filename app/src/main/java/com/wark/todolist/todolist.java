@@ -1,6 +1,8 @@
 package com.wark.todolist;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.text.UnicodeSetSpanner;
 import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +25,7 @@ public class todolist extends AppCompatActivity{
     FloatingActionButton Fl_btn;
     Toolbar toolbar;
     TextView textview;
-    ImageView imageview
+    ImageView imageview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,6 @@ public class todolist extends AppCompatActivity{
         textview = (TextView) findViewById(R.id.if_no_text);
         Fl_btn = (FloatingActionButton) findViewById(R.id.Fl_Btn);
         setSupportActionBar(toolbar);
-
 
         textview.setText("You don't have any todos");
         imageview.setBackgroundResource(R.drawable.empty_view_bg);
