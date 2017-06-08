@@ -60,8 +60,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/add"
-            app:rippleColor="@color/blue"
-            />
+            app:rippleColor="@color/blue" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listview"
