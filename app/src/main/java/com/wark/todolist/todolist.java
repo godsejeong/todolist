@@ -42,14 +42,16 @@ public class todolist extends AppCompatActivity{
         textview_2 = (TextView) findViewById(R.id.textView_2);
         Fl_btn = (FloatingActionButton) findViewById(R.id.Fl_Btn);
         daily = (RecyclerView) findViewById(R.id.listview);
-        list_Adapter = new Recycler_Adapter(items, R.layout.lest_item, this);
+        list_Adapter = new Recycler_Adapter(items,R.layout.lest_item, this);
         setSupportActionBar(toolbar);
 
         list_Adapter. setItemClick(new Recycler_Adapter.ItemClick() {
+            @Override
             public void onClick(View view, int position) {
                 Toast.makeText(todolist.this, view + "    " + position, Toast.LENGTH_SHORT).show();
                 Intent pointent = new Intent(todolist.this, Set_todo.class);
                 pointent.putExtra("position",position);
+                Log.e("abcd","abcd");
                 startActivityForResult(pointent, 1234);
             }
         });
@@ -98,13 +100,12 @@ public class todolist extends AppCompatActivity{
         Gson gson = new Gson();
         if(resultCode == RESULT_OK){
             if (requestCode == 333) {//플로팅 버튼 이동
-                textview.setText("");
-                imageview.setImageResource(0);
                 items.clear();
                 String _data = data.getStringExtra("result");
                 ArrayList<Data> items_ = new ArrayList<>();
                 items_ = gson.fromJson(_data, new TypeToken<ArrayList<Data>>(){}.getType());
                 items.addAll(items_);
+                Log.i("items_",""+items_);
                 saveNowData();
                 list_Adapter.notifyDataSetChanged();
             }else if(requestCode == 1234){//아이템을 눌렀을때
@@ -113,6 +114,7 @@ public class todolist extends AppCompatActivity{
                 ArrayList<Data> items__ = new ArrayList<>();
                 items__ = gson.fromJson(data_, new TypeToken<ArrayList<Data>>(){}.getType());
                 items.addAll(items__);
+                Log.i("result","확인");
                 saveNowData();
                 list_Adapter.notifyDataSetChanged();
             }

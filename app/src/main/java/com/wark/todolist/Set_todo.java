@@ -128,10 +128,10 @@ public class Set_todo extends Activity implements View.OnClickListener {
                     items.add(new Data(list_text.getText().toString(), cla_btn.getText().toString(), time_btn.getText().toString()));
                     String stringItem = gson.toJson(items);
                     getIntent().putExtra("result", stringItem);
+                    setResult(RESULT_OK, getIntent());
                     Alarm_pintent = PendingIntent.getBroadcast(this, 0, Alarm_intent, Alarm_pintent.FLAG_UPDATE_CURRENT);
                     alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),    Alarm_pintent);
-                    setResult(RESULT_OK, getIntent());
                     finish();
                 } else {
                     Log.d("gm","hmm");
@@ -146,6 +146,13 @@ public class Set_todo extends Activity implements View.OnClickListener {
             case R.id.close_btn:
                 finish();
                 break;
+
+//            case R.id.cal_btn:
+//                new DatePickerDialog(Set_todo.this, dateSetListener, year, month, day).show();
+//                break;
+//            case R.id.time_btn:
+//                new TimePickerDialog(Set_Daily_Activity.this, timeSetListener, hour, minute, false).show();
+//                break;
 
         }
     }
@@ -167,7 +174,6 @@ public class Set_todo extends Activity implements View.OnClickListener {
         Log.d("asd", json);
         ArrayList<Data> items_ = new ArrayList<>();
         items_ = gson.fromJson(json, new TypeToken<ArrayList<Data>>(){}.getType());
-        Log.i("items_",""+items_);
         if (items_ != null) items.addAll(items_);
     }
 }
