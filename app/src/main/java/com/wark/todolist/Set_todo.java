@@ -3,11 +3,11 @@ package com.wark.todolist;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,7 +38,7 @@ public class Set_todo extends Activity implements View.OnClickListener {
     Button time_btn;//시간버튼
     Button cla_btn;//캘런더버튼
     TextView information;//정보
-    ArrayList<Data> items = new ArrayList<>();
+    ArrayList<Data> items;
     AlarmManager alarmManager;
     Calendar calendar = Calendar.getInstance();
     SharedPreferences prefs;
@@ -90,10 +91,10 @@ public class Set_todo extends Activity implements View.OnClickListener {
         close.setOnClickListener(this);
         time_btn.setOnClickListener(this);
         cla_btn.setOnClickListener(this);
-        Log.d("set_items", String.valueOf(items));
-        if (pos != -1) {
-            list_text.setText(" " +items.get(pos).getTitle());
-                if (items.get(pos).getDate() != null) {
+       // Log.d("set_items", items+"\n"+String.valueOf(items)+"\n"+items.get(0));
+        if (pos != -1) {//리스트 클릭시에만 작동
+            list_text.setText("" + items.get(pos).getTitle() + "");
+            if (items.get(pos).getDate() != null) {
                 layout.setVisibility(View.VISIBLE);
                 Log.e("date", items.get(pos).getDate() + "");
                 cla_btn.setText("" + items.get(pos).getDate());
@@ -127,10 +128,10 @@ public class Set_todo extends Activity implements View.OnClickListener {
                     items.add(new Data(list_text.getText().toString(), cla_btn.getText().toString(), time_btn.getText().toString()));
                     String stringItem = gson.toJson(items);
                     getIntent().putExtra("result", stringItem);
-                    setResult(RESULT_OK, getIntent());
                     Alarm_pintent = PendingIntent.getBroadcast(this, 0, Alarm_intent, Alarm_pintent.FLAG_UPDATE_CURRENT);
                     alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),    Alarm_pintent);
+                    setResult(RESULT_OK, getIntent());
                     finish();
                 } else {
                     Log.d("gm","hmm");
@@ -146,18 +147,27 @@ public class Set_todo extends Activity implements View.OnClickListener {
                 finish();
                 break;
 
-
         }
     }
+    private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // TODO Auto-generated method stub
+            String msg = String.format("%d:%d  %s", hourOfDay, minute, (hourOfDay<13) ? "AM" : "PM");
+            time_btn.setText(""+msg);
+            calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+            calendar.set(calendar.MINUTE,minute);
+        }
 
+    };
     void loadNowData() {
         Gson gson = new Gson();
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String json = pref.getString("save", "");
         Log.d("asd", json);
         ArrayList<Data> items_ = new ArrayList<>();
-        items_ = gson.fromJson(json, new TypeToken<ArrayList<ContactsContract.Data>>() {
-        }.getType());
+        items_ = gson.fromJson(json, new TypeToken<ArrayList<Data>>(){}.getType());
+        Log.i("items_",""+items_);
         if (items_ != null) items.addAll(items_);
     }
 }

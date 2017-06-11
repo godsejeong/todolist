@@ -18,35 +18,43 @@
         </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:src="@drawable/shape"
-                android:textColor="#FFF"
-                android:padding="6dp"
-                />
+        <ImageView
+            android:id="@+id/item_imageView"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:padding="4dp"
+            android:src="@drawable/shape"
+            android:textColor="#FFF" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="8.2"
+            android:layout_weight="9.7"
+            android:weightSum="2"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1.5"
+                android:gravity="bottom"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textView_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:gravity="center"
                 android:textColor="#5191ff" />
         </LinearLayout>
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#000"></LinearLayout>
 </LinearLayout>

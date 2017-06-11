@@ -27,6 +27,7 @@ public class todolist extends AppCompatActivity{
     FloatingActionButton Fl_btn;
     Toolbar toolbar;
     TextView textview;
+    TextView textview_2;
     ImageView imageview;
     Recycler_Adapter list_Adapter;
     RecyclerView daily;
@@ -35,15 +36,14 @@ public class todolist extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todolist);
-        imageview = (ImageView) findViewById(R.id.imageview);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        imageview = (ImageView) findViewById(R.id.imageview);
         textview = (TextView) findViewById(R.id.if_no_text);
-        TextView textview_2 = (TextView) findViewById(R.id.textView_2);
+        textview_2 = (TextView) findViewById(R.id.textView_2);
         Fl_btn = (FloatingActionButton) findViewById(R.id.Fl_Btn);
         daily = (RecyclerView) findViewById(R.id.listview);
         list_Adapter = new Recycler_Adapter(items, R.layout.lest_item, this);
         setSupportActionBar(toolbar);
-
 
         list_Adapter. setItemClick(new Recycler_Adapter.ItemClick() {
             public void onClick(View view, int position) {
@@ -62,8 +62,7 @@ public class todolist extends AppCompatActivity{
         saveNowData();
         list_Adapter.notifyDataSetChanged();
 
-        ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(list_Adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(list_Adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(daily);
 
@@ -98,7 +97,7 @@ public class todolist extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {         //result코드가 333일때 gson,json 형식으로 데이터를 받아옴
         Gson gson = new Gson();
         if(resultCode == RESULT_OK){
-            if (requestCode == 333) {
+            if (requestCode == 333) {//플로팅 버튼 이동
                 textview.setText("");
                 imageview.setImageResource(0);
                 items.clear();
@@ -108,7 +107,7 @@ public class todolist extends AppCompatActivity{
                 items.addAll(items_);
                 saveNowData();
                 list_Adapter.notifyDataSetChanged();
-            }else if(requestCode == 1234){
+            }else if(requestCode == 1234){//아이템을 눌렀을때
                 items.clear();
                 String data_ = data.getStringExtra("result");
                 ArrayList<Data> items__ = new ArrayList<>();

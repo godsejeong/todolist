@@ -96,7 +96,7 @@ public class Recycler_Adapter extends RecyclerView.Adapter<Recycler_Adapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            item_img = (ImageView) itemView.findViewById(R.id.imageview);
+            item_img = (ImageView) itemView.findViewById(R.id.item_imageView);
             title = (TextView) itemView.findViewById(R.id.textView);
             time = (TextView) itemView.findViewById(R.id.textView_2);
         }
