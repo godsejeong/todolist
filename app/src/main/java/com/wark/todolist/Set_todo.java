@@ -2,6 +2,7 @@ package com.wark.todolist;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -40,6 +42,7 @@ public class Set_todo extends Activity implements View.OnClickListener {
     TextView information;//정보
     ArrayList<Data> items;
     AlarmManager alarmManager;
+    int year, month, day, hour, minute;
     Calendar calendar = Calendar.getInstance();
     SharedPreferences prefs;
     int pos;
@@ -147,15 +150,56 @@ public class Set_todo extends Activity implements View.OnClickListener {
                 finish();
                 break;
 
-//            case R.id.cal_btn:
-//                new DatePickerDialog(Set_todo.this, dateSetListener, year, month, day).show();
-//                break;
-//            case R.id.time_btn:
-//                new TimePickerDialog(Set_Daily_Activity.this, timeSetListener, hour, minute, false).show();
-//                break;
+            case R.id.cal_btn:
+                new DatePickerDialog(Set_todo.this, dateSetListener, year, month, day).show();
+                break;
+            case R.id.time_btn:
+                new TimePickerDialog(Set_todo.this, timeSetListener, hour, minute, false).show();
+                break;
 
         }
     }
+
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            String monthOfYear_ = "";
+            switch (monthOfYear+1){
+                case 1 : monthOfYear_ = "Jan";
+                    break;
+                case 2 : monthOfYear_ = "Feb";
+                    break;
+                case 3 : monthOfYear_ = "Mar";
+                    break;
+                case 4 : monthOfYear_ = "Apr";
+                    break;
+                case 5 : monthOfYear_ = "May";
+                    break;
+                case 6 : monthOfYear_ = "Jun";
+                    break;
+                case 7 : monthOfYear_ = "Jul";
+                    break;
+                case 8 : monthOfYear_ = "Aug";
+                    break;
+                case 9 : monthOfYear_ = "Sep";
+                    break;
+                case 10 : monthOfYear_ = "Oct";
+                    break;
+                case 11 : monthOfYear_ = "Nov";
+                    break;
+                case 12 : monthOfYear_ = "Dec";
+                    break;
+            }
+            String date_msg = String.format("%d %s, %d", dayOfMonth,monthOfYear_, year);
+            cla_btn.setText(""+date_msg);
+            calendar.set(calendar.YEAR,year);
+            calendar.set(calendar.MONTH,monthOfYear);
+            calendar.set(calendar.DAY_OF_MONTH,dayOfMonth);
+        }
+
+    };
+
     private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
